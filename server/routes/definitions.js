@@ -4,6 +4,9 @@ const { DateTime } = require('luxon');
 
 const validateNoErrors = require('../validators/errors-validate');
 
+const definitions = require('../utils/loki-db');
+const { StatusCodes } = require('http-status-codes');
+
 const router = express.Router();
 
 router.get('/:datetime',
@@ -20,7 +23,20 @@ router.get('/:datetime',
     console.log(datetime);
     const dt = DateTime.fromISO(datetime, {setZone: true});
     
-    return res.json(`Hello World ${dt.weekdayShort} (${dt.weekday % 7}) - ${dt.hour}:00 @ ${dt.zoneName}`);
+    // Get all defs that are un treated - there could be millions
+    const defsToTreat = definitions.where(def => !def.treated)
+
+    // Treat them all - write to log and set treated to true
+    return Promise.all(defsToTreat.map(async def => {
+        console.log(def);
+        def.treated = true;
+        definitions.update(def);
+    }))
+    .then(() => res.status(StatusCodes.OK))
+    .catch((e) => {
+        console.error(e);
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+    });
 });
 
 module.exports = router;
