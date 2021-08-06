@@ -1,6 +1,6 @@
 .def {
     border-radius: 24px;
-    height: 120px;
+    border: 1px solid black;
     margin: 1em;
     display: flex;
     align-items: center;
@@ -11,7 +11,8 @@
     padding: 1em;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
+    text-align: left;
 }
 
 .data {
@@ -45,7 +46,7 @@
 
 .highlight {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 20px;
     /* identical to box height, or 143% */
 
@@ -54,8 +55,7 @@
     color: #333333;
 }
 
-/* TODO */
-.body {
+.lastTreated {
     font-weight: normal;
     font-size: 12px;
     line-height: 16px;
@@ -63,13 +63,20 @@
 
     letter-spacing: 0.25px;
     margin-top: .5em;
-    margin-bottom: 1em;
 
     color: #828282;
 }
 
-.lock {
-    bottom: 1em;
-    right: 1em;
-    position: absolute;
+.body {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 16px;
+    /* identical to box height, or 133% */
+
+    letter-spacing: 0.25px;
+    margin-top: 1em;
+}
+
+.body > p {
+    margin: .5em 0;
 }

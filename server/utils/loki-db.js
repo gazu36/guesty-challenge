@@ -19,7 +19,10 @@ definitions.insert([
     },
     {
         recipients: [5],
-        body: 'Only for five',
+        body: `Only for five and lots
+and asghdsfhadh
+adsfh
+adgSDHdshafjadhjadgjadfgkaf`,
         recurrence: {
             days: [1], // Monday
             hour: 4
