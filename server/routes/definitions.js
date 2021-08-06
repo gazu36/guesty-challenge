@@ -25,9 +25,8 @@ router.get('/:datetime',
 
     const fetchDefsFn = def => {
         const defDt = dt.setZone(def.timezone);
-        return !def.lastTreated &&
-            def.recurrence.days.includes(defDt.weekday) &&
-            def.recurrence.hour === defDt.hour;
+        return (!def.lastTreated || def.lastTreated != DateTime.now().toLocaleString()) &&
+            (def.recurrence.days.includes(defDt.weekday) && def.recurrence.hour === defDt.hour);
     }
 
     return handleDefs(fetchDefs(fetchDefsFn))

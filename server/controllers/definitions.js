@@ -7,7 +7,7 @@ const fetchDefs = (fetchFn) => definitions.where(fetchFn);
 // TODO: split logging and updating
 const handleDefs = (defs) => Promise.all(defs.map(async def => {
     console.log(def);
-    def.lastTreated = DateTime.now();
+    def.lastTreated = DateTime.now().toLocaleString();
     definitions.update(def);
     return def;
 }));
