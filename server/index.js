@@ -7,6 +7,7 @@ const cors = require('cors');
 const expressUtils = require('./expressUtils');
 
 const indexRouter = require('./routes/index');
+const definitionsRouter = require('./routes/definitions');
 
 // Create Express instance
 var app = express();
@@ -23,5 +24,6 @@ app.set('port', port);
 server.on('error', expressUtils.onError);
 server.on('listening', () => expressUtils.onListening(server));
 
+app.use('/defs', definitionsRouter);
 app.use('*', indexRouter);
 server.listen(port);
