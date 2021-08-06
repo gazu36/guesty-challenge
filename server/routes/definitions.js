@@ -20,8 +20,7 @@ router.get('/:datetime',
     validateNoErrors,
     (req, res) => {
     const {datetime} = req.params;
-    console.log(datetime);
-    const dt = DateTime.fromISO(datetime, {setZone: true});
+    const dt = DateTime.fromISO(datetime, { setZone: true });
 
     const fetchDefsFn = def => {
         const defDt = dt.setZone(def.timezone);

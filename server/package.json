@@ -17,6 +17,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
+    "express-ws": "^5.0.2",
     "http-status-codes": "^2.1.4",
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
