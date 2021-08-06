@@ -43,4 +43,6 @@ router.get('/:datetime',
         });;
 });
 
+router.get('/', (req, res) => res.status(StatusCodes.OK).json(fetchDefs()))
+
 module.exports = router;
