@@ -1,0 +1,18 @@
+.DS_Store
+*.rest
+
+.vscode/
+
+*.code-workspace
+
+*/node_modules
+*/build
+*/.env*
+
+
+# Client
+client/.vscode
+client/public/config.js
+
+# Server
+server/.vscode
