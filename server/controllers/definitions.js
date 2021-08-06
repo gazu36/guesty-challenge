@@ -1,7 +1,13 @@
 const { DateTime } = require('luxon');
 const definitions = require("../utils/loki-db");
 
-const fetchDefs = (fetchFn) => fetchFn ? definitions.where(fetchFn) : definitions.find();
+const _fetchFromDB = (fetchFn) => fetchFn ? definitions.where(fetchFn) : definitions.find();
+
+const fetchDefs = (fetchFn) => _fetchFromDB(fetchFn).map(def => {
+    const newDef = { ...def, id: def.$loki }
+    delete newDef.$loki
+    return newDef
+});
 
 // Treat them all - write to log and set treated to true
 // TODO: split logging and updating
