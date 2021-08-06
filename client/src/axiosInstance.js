@@ -1,5 +1,3 @@
-import { configure } from 'axios-hooks';
-import LRU from 'lru-cache';
 import Axios from 'axios';
 
 export const axios = Axios.create({
@@ -9,7 +7,3 @@ export const axios = Axios.create({
 		'Content-Type': 'application/json'
 	}
 });
-
-const cache = new LRU({ max: 10 });
-
-configure({ axios, cache });
