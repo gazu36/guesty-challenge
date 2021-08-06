@@ -46,7 +46,7 @@ export const Panel = () => {
 
     return (
         <div id="definitions-panel" className={styles.panel}>
-            <h2 className={styles.title}>Definitions Handler</h2>
+            <h2 className={styles.title}>Guesty Definitions Handler</h2>
             <div className={styles.wrapper}>
                 <span style={{color: untreatedOnly ? '#D3D3D3' : ''}} className={styles.filterText}>All Definitions</span>
                 <Switch value={untreatedOnly} toggleFn={toggleUntreated}/>
