@@ -16,7 +16,7 @@ definitions.insert([
             days: [7,3,5], // Sunday, Wednesday, Friday
             hour: 23
         },
-        timezone: '-0100'
+        timezone: 'UTC-1'
     },
     {
         recipients: [5],
@@ -26,7 +26,7 @@ definitions.insert([
             days: [1], // Monday
             hour: 4
         },
-        timezone: '+0400'
+        timezone: 'UTC+4'
     },
     {
         recipients: [1,4],
@@ -36,7 +36,7 @@ definitions.insert([
             days: [1,5], // Monday, Friday
             hour: 15
         },
-        timezone: '+0000'
+        timezone: 'UTC'
     }
 ])
 

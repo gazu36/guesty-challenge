@@ -24,18 +24,19 @@ router.get('/:datetime',
     console.log(datetime);
     const dt = DateTime.fromISO(datetime, {setZone: true});
 
-    // handle TZ
-    const fetchDefsFn = def => 
-        !def.treated
-        && def.recurrence.days.includes(dt.weekday)
-        && def.recurrence.hour === dt.hour;
+    const fetchDefsFn = def => {
+        const defDt = dt.setZone(def.timezone);
+        return !def.treated &&
+            def.recurrence.days.includes(defDt.weekday) &&
+            def.recurrence.hour === defDt.hour;
+    }
 
     return handleDefs(fetchDefs(fetchDefsFn))
         .then((results) => res.status(StatusCodes.OK).json({
             date: {
                 weekday: dt.weekday,
                 hour: dt.hour,
-                timezone: dt.offset
+                timezone: dt.zoneName
             },
             results
         }))
