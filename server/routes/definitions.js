@@ -4,7 +4,6 @@ const { DateTime } = require('luxon');
 
 const validateNoErrors = require('../validators/errors-validate');
 
-const definitions = require('../utils/loki-db');
 const { StatusCodes } = require('http-status-codes');
 const { handleDefs, fetchDefs } = require('../controllers/definitions');
 
@@ -26,7 +25,7 @@ router.get('/:datetime',
 
     const fetchDefsFn = def => {
         const defDt = dt.setZone(def.timezone);
-        return !def.treated &&
+        return !def.lastTreated &&
             def.recurrence.days.includes(defDt.weekday) &&
             def.recurrence.hour === defDt.hour;
     }

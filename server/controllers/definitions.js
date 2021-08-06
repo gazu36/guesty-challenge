@@ -1,3 +1,4 @@
+const { DateTime } = require('luxon');
 const definitions = require("../utils/loki-db");
 
 const fetchDefs = (fetchFn) => definitions.where(fetchFn);
@@ -6,7 +7,7 @@ const fetchDefs = (fetchFn) => definitions.where(fetchFn);
 // TODO: split logging and updating
 const handleDefs = (defs) => Promise.all(defs.map(async def => {
     console.log(def);
-    def.treated = true;
+    def.lastTreated = DateTime.now();
     definitions.update(def);
     return def;
 }));
