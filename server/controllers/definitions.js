@@ -3,6 +3,8 @@ const definitions = require("../utils/loki-db");
 
 const _fetchFromDB = (fetchFn) => fetchFn ? definitions.where(fetchFn) : definitions.find();
 
+const insertDef = (def) => definitions.insert(def);
+
 const fetchDefs = (fetchFn) => _fetchFromDB(fetchFn).map(def => ({...def, id: def.$loki}));
 
 // Treat them all - write to log and set treated to true
@@ -14,4 +16,4 @@ const handleDefs = (defs) => Promise.all(defs.map(async def => {
     return def;
 }));
 
-module.exports = {fetchDefs, handleDefs};
+module.exports = {insertDef, fetchDefs, handleDefs};
