@@ -13,6 +13,7 @@ const definitionsRouter = require('./routes/definitions');
 var app = express();
 
 app.use(cors());
+app.use(express.json());
 
 var server = http.createServer(app);
 

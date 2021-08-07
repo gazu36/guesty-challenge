@@ -20,6 +20,7 @@ router.patch('/',
     validateNoErrors,
     (req, res) => {
     const {datetime} = req.body;
+    console.log(`Treating ${datetime}`)
     const dt = DateTime.fromISO(datetime, { setZone: true });
 
     const fetchDefsFn = def => {
@@ -29,14 +30,7 @@ router.patch('/',
     }
 
     return handleDefs(fetchDefs(fetchDefsFn))
-        .then((results) => res.status(StatusCodes.OK).json({
-            date: {
-                weekday: dt.weekday,
-                hour: dt.hour,
-                timezone: dt.zoneName
-            },
-            results
-        }))
+        .then((results) => res.status(StatusCodes.OK).json(results))
         .catch((e) => {
             console.error(e);
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR);

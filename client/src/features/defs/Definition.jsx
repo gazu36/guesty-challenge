@@ -24,7 +24,7 @@ const Definition = ({defId}) => {
           <div className={styles.highlight}>will be sent to {def?.recipients.join(', ')}</div>
           <div className={styles.highlight}>on every {recurrenceDays} at {def?.recurrence.hour}:00 ({def?.timezone})</div>
           {def?.lastTreated && <div className={styles.lastTreated}>Last treated at {def?.lastTreated}</div>}
-          <div className={styles.body}><u>Content:</u> {def?.body.split('\n').map(p => <p>{p}</p>)}</div>
+          <div className={styles.body}><u>Content:</u> {def?.body.split('\n').map((line, i) => <p key={i}>{line}</p>)}</div>
         </div>
       </div>
     </div>

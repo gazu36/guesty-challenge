@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectDefIds, selectUntreatedDefinitions, fetchDefinitions, randomDefinitions } from '../defs/definitionsSlice';
+import { selectDefIds, selectUntreatedDefinitions, fetchDefinitions, randomDefinitions, treatDefinitions } from '../defs/definitionsSlice';
 import Definition from '../defs/Definition';
 import Switch from './Switch';
 import styles from './Panel.module.css'
@@ -47,7 +47,10 @@ export const Panel = () => {
     return (
         <div id="definitions-panel" className={styles.panel}>
             <h2 className={styles.title}>Guesty Definitions Handler</h2>
-            <button onClick={() => dispatch(randomDefinitions())}>Bulk generate random</button>
+            <div className={styles.wrapper}>
+                <button onClick={() => dispatch(randomDefinitions())}>Bulk generate random</button>
+                <button onClick={() => dispatch(treatDefinitions())}>Treat definitions for now</button>
+            </div>
             <div className={styles.wrapper}>
                 <span style={{color: untreatedOnly ? '#D3D3D3' : ''}} className={styles.filterText}>All Definitions</span>
                 <Switch value={untreatedOnly} toggleFn={toggleUntreated}/>

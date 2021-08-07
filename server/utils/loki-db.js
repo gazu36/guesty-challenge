@@ -33,8 +33,8 @@ adgSDHdshafjadhjadgjadfgkaf`,
         recipients: [1,4],
         body: 'Only 1 and 4 sale',
         recurrence: {
-            days: [1,5], // Monday, Friday
-            hour: 15
+            days: [1,6], // Monday, Saturday
+            hour: 20
         },
         timezone: 'UTC'
     }

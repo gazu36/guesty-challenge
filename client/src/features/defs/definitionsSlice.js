@@ -11,20 +11,25 @@ export const randomDefinitions = createAsyncThunk(
   async () => axios.get(`defs/random/${Math.floor(Math.random() * 20) + 1}`).then(res => res.data)
 )
 
+export const treatDefinitions = createAsyncThunk(
+  '/treat',
+  async () => {
+    const dtNow = new Date();
+    dtNow.setMinutes(0);
+    dtNow.setSeconds(0);
+    dtNow.setMilliseconds(0);
+    return axios.patch(`/defs`, { datetime: dtNow.toISOString() }).then(res => res.data)
+  }
+)
+
 const definitionsAdapter = createEntityAdapter();
 
 export const definitionsSlice = createSlice({
   name: 'definitions',
   initialState: definitionsAdapter.getInitialState({
     status: 'idle',
-    error: null,
-    protectedOnly: false
+    error: null
 }),
-  reducers: {
-    toggleProtectedOnlyFilter: (state) => {
-      state.protectedOnly = !state.protectedOnly;
-    }
-  },
   extraReducers: {
     [fetchDefinitions.pending]: (state, action) => { state.status='loading' },
     [fetchDefinitions.fulfilled]: (state, action) => {
@@ -35,16 +40,14 @@ export const definitionsSlice = createSlice({
       state.status = 'failed'
       state.error = action.error.message
     },
-    [randomDefinitions.fulfilled]: (state, action) => {
-      state.status = 'succeeded'
-      console.log('received:')
-      console.log(action.payload)
-      definitionsAdapter.upsertMany(state, action.payload)
-    }
+    [randomDefinitions.fulfilled]: (state, action) => definitionsAdapter.upsertMany(state, action.payload),
+    [treatDefinitions.fulfilled]: (state, action) => definitionsAdapter.upsertMany(state, action.payload),
+    [treatDefinitions.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
   }
 });
-
-export const { toggleProtectedOnlyFilter } = definitionsSlice.actions;
 
 export default definitionsSlice.reducer;
 
