@@ -1,5 +1,5 @@
 const express = require('express');
-const { param } = require('express-validator');
+const { param, body } = require('express-validator');
 const { DateTime } = require('luxon');
 
 const validateNoErrors = require('../validators/errors-validate');
@@ -45,10 +45,10 @@ router.patch('/',
 
 router.get('/random/:amount',
     [
-        params('amount')
+        param('amount')
             .exists({ checkNull: true, checkFalsy: true })
             .withMessage('amount is required')
-            .isInteger({gt: 1})
+            .isInt({gt: 1})
             .withMessage('datetime must be an Integer > 1')
     ],
     validateNoErrors,
