@@ -9,9 +9,9 @@ const { insertDef, handleDefs, fetchDefs } = require('../controllers/definitions
 
 const router = express.Router();
 
-router.patch('/:datetime',
+router.patch('/',
     [
-        param('datetime')
+        body('datetime')
             .exists({ checkNull: true, checkFalsy: true })
             .withMessage('datetime is required')
             .isISO8601()
@@ -19,7 +19,7 @@ router.patch('/:datetime',
     ],
     validateNoErrors,
     (req, res) => {
-    const {datetime} = req.params;
+    const {datetime} = req.body;
     const dt = DateTime.fromISO(datetime, { setZone: true });
 
     const fetchDefsFn = def => {
@@ -43,9 +43,9 @@ router.patch('/:datetime',
         });;
 });
 
-router.post('/',
+router.get('/random/:amount',
     [
-        body('amount')
+        params('amount')
             .exists({ checkNull: true, checkFalsy: true })
             .withMessage('amount is required')
             .isInteger({gt: 1})
@@ -53,7 +53,7 @@ router.post('/',
     ],
     validateNoErrors,
     async (req, res) => {
-        const {amount: amountToCreate} = req.body;
+        const {amount: amountToCreate} = req.params;
 
         return Promise.all(Array(amountToCreate).keys().map(async () => insertDef({
                     recipients: getRandomRecipients(),
@@ -64,7 +64,8 @@ router.post('/',
                     },
                     timezone: getRandomOffset()
             })
-        )).then(defsCreated => res.status(StatusCodes.OK).json(defsCreated))
+        ))
+        .then(defsCreated => res.status(StatusCodes.OK).json(defsCreated))
         .catch(e => {
             console.error(e);
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR);
