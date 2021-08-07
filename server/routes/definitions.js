@@ -50,12 +50,14 @@ router.get('/random/:amount',
             .withMessage('amount is required')
             .isInt({gt: 1})
             .withMessage('datetime must be an Integer > 1')
+            .toInt()
     ],
     validateNoErrors,
     async (req, res) => {
         const {amount: amountToCreate} = req.params;
-
-        return Promise.all(Array(amountToCreate).keys().map(async () => insertDef({
+        return await Promise.all(
+            Array.from(Array(amountToCreate).keys()).map(async (i) => {
+                const defToInsert = {
                     recipients: getRandomRecipients(),
                     body: getRandomSentece(),
                     recurrence: {
@@ -63,9 +65,15 @@ router.get('/random/:amount',
                         hour: Math.floor(Math.random() * 24)
                     },
                     timezone: getRandomOffset()
+                };
+                const dbDef = insertDef(defToInsert);
+                return {...dbDef, id: dbDef.$loki};
             })
-        ))
-        .then(defsCreated => res.status(StatusCodes.OK).json(defsCreated))
+        )
+        .then(defsCreated => {
+            console.log(`Created ${defsCreated.length} random Definitions`);
+            return res.status(StatusCodes.OK).json(defsCreated);
+        })
         .catch(e => {
             console.error(e);
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -74,11 +82,11 @@ router.get('/random/:amount',
 
 router.get('/', (req, res) => res.status(StatusCodes.OK).json(fetchDefs()))
 
-const _getRandomArr = (length) => Array.from(Array(5).keys()).map(v => [v, Math.random() < 0.5]).filter(arr => arr[1]).map(arr => arr[0])
+const _getRandomArr = (length) => Array.from(Array(length).keys()).map(v => [v, Math.random() < 0.5]).filter(arr => arr[1]).map(arr => arr[0])
 
 const getRandomRecipients = () => _getRandomArr(5)
 
-const getRandomDays = () => _getRandomArr(7).map(v => v+1)
+const getRandomDays = () => _getRandomArr(7).map(v => v + 1)
 
 const getRandomOffset = () => {
     const offset = Math.floor(Math.random() * 26) - 12;
