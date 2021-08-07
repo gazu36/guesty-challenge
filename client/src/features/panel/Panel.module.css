@@ -42,3 +42,11 @@
     font-size: 15px;
     margin: 0 2em;
 }
+
+.button {
+    border-radius: 12px;
+    border: 1px solid grey;
+    margin: .8em;
+    padding: .2em .6em;
+    font-family: 'poppins', sans-serif;
+}

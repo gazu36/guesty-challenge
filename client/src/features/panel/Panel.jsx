@@ -48,8 +48,8 @@ export const Panel = () => {
         <div id="definitions-panel" className={styles.panel}>
             <h2 className={styles.title}>Guesty Definitions Handler</h2>
             <div className={styles.wrapper}>
-                <button onClick={() => dispatch(randomDefinitions())}>Bulk generate random</button>
-                <button onClick={() => dispatch(treatDefinitions())}>Treat definitions for now</button>
+                <button className={styles.button} onClick={() => dispatch(randomDefinitions())}>Bulk generate random</button>
+                <button className={styles.button} onClick={() => dispatch(treatDefinitions())}>Treat definitions for now</button>
             </div>
             <div className={styles.wrapper}>
                 <span style={{color: untreatedOnly ? '#D3D3D3' : ''}} className={styles.filterText}>All Definitions</span>
